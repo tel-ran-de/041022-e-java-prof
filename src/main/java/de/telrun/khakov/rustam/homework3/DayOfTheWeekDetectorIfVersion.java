@@ -26,4 +26,6 @@ class DayOfTheWeekDetectorIfVersion implements DayOfTheWeekDetector {
 			return "Please input a valid number between 1 and 7";
 		}
 	}
+
+
 }

@@ -76,4 +76,15 @@ public class CreditCard {
 		}
 		return true;
 	}
+
+	@Override
+	public String toString() {
+		return "CreditCard{" +
+				"number='" + number + '\'' +
+				", pin= ****"  +
+				", balance=" + balance +
+				", creditLimit= ****" +
+				", creditDebt= ****" +
+				'}';
+	}
 }
