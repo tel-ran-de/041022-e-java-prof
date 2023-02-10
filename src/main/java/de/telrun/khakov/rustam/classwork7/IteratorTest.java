@@ -27,9 +27,9 @@ public class IteratorTest {
 		System.out.println("iterator example: ");
 
 
-		Iterator<String> iterator = strings.iterator();
-		while (iterator.hasNext()) {// есть ли следующий элемент? да
-			String currentVal = iterator.next();// верни след элемент
+		Iterator<String> iterator = strings.iterator();// int i =0
+		while (iterator.hasNext()) {// есть ли следующий элемент? да i<size()
+			String currentVal = iterator.next();// верни след элемент array[i];
 			System.out.println(currentVal);
 		}
 
