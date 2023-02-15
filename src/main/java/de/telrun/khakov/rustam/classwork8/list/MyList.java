@@ -5,6 +5,7 @@ import java.util.Deque;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Objects;
 
 /**
  * @author Rustam Khakov
@@ -136,7 +137,6 @@ public class MyList implements List<Integer>, Deque<Integer> {
 		int index = 0;
 		while (iterator.hasNext()) {
 			if (iterator.next().equals(o)) {
-				remove(index);
 				return index;
 			}
 			index++;
@@ -146,7 +146,7 @@ public class MyList implements List<Integer>, Deque<Integer> {
 
 	@Override
 	public boolean addAll(Collection<? extends Integer> c) {
-		for (Integer i:c) {
+		for (Integer i : c) {
 			add(i);
 		}
 		return true;
@@ -158,17 +158,29 @@ public class MyList implements List<Integer>, Deque<Integer> {
 		if (index < 0 || index >= size()) {
 			throw new IndexOutOfBoundsException();
 		}
+		boolean iterateFromFirst = index <= size / 2;
 		int currentIndex = 0;
-		Node currentNode = first;
-		while (index != currentIndex) {
-			currentIndex++;
-			currentNode = currentNode.getNext();
+		if (iterateFromFirst) {
+			Node currentNode = first;
+			while (index != currentIndex) {
+				currentIndex++;
+				currentNode = currentNode.getNext();
+			}
+			return currentNode;
+		} else {
+			currentIndex = size - 1;
+			Node currentNode = last;
+			while (index != currentIndex) {
+				currentIndex--;
+				currentNode = currentNode.getPrev();
+			}
+			return currentNode;
 		}
-		return currentNode;
 	}
 
 	/**
 	 * Уровень 2 - методы
+	 *
 	 * @see this#findNodeByIndex(int) - сделать поиск с конца, если индекс находится во второй половине списка
 	 * @see this#descendingIterator() - итератор из конца в начало
 	 * @see this#listIterator() - итератор с дополнительной сылкой на предыдущий
@@ -184,63 +196,92 @@ public class MyList implements List<Integer>, Deque<Integer> {
 
 	@Override
 	public Iterator<Integer> descendingIterator() {
-		return null;
+		return new DescendingListIterator(last);
 	}
 
 	@Override
 	public ListIterator<Integer> listIterator() {
-		return null;
+		return new MyListListIterator(first);
 	}
 
 
 	@Override
 	public Object[] toArray() {
-		return new Object[0];
+		Object[] arr = new Object[size];
+		Iterator<Integer> iterator = iterator();
+		int index = 0;
+		while (iterator.hasNext()) {
+			arr[index] = iterator.next();
+			index++;
+		}
+		return arr;
 	}
 
 	@Override
 	public boolean containsAll(Collection<?> c) {
-		return false;
+		for (Object i : c) {
+			if (!contains(i)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@Override
 	public boolean removeAll(Collection<?> c) {
-		return false;
+		for (Object i : c) {
+			remove(i);
+		}
+		return true;
 	}
 
 	@Override
 	public int lastIndexOf(Object o) {
-		return 0;
+		Iterator<Integer> iterator = descendingIterator();
+		int index = size - 1;
+		while (iterator.hasNext()) {
+			if (iterator.next().equals(o)) {
+				return index;
+			}
+			index--;
+		}
+		return -1;
 	}
 
 
 	@Override
 	public List<Integer> subList(int fromIndex, int toIndex) {
-		return null;
+		Node subListCurrentNode = findNodeByIndex(fromIndex);
+		List<Integer> subList = new MyList();
+		int current = fromIndex;
+		while (current!= toIndex) {
+			subList.add(subListCurrentNode.getValue());
+			subListCurrentNode = subListCurrentNode.getNext();
+			current++;
+		}
+		return subList;
 	}
 
 	@Override
 	public boolean addAll(int index, Collection<? extends Integer> c) {
-		return false;
+		int toInsertIndex = index;
+		for (Integer i : c) {
+			add(toInsertIndex, i);
+			toInsertIndex++;
+		}
+		return true;
 	}
 
 	@Override
 	public boolean retainAll(Collection<?> c) {
-		return false;
+		Iterator<Integer> it = iterator();
+		while (it.hasNext()) {
+			if (!c.contains(it.next())) {
+				it.remove();
+			}
+		}
+		return true;
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	@Override
@@ -256,7 +297,7 @@ public class MyList implements List<Integer>, Deque<Integer> {
 
 	@Override
 	public Integer pop() {
-		return remove(size-1);
+		return remove(size - 1);
 	}
 
 	@Override
@@ -291,7 +332,7 @@ public class MyList implements List<Integer>, Deque<Integer> {
 
 	@Override
 	public Integer removeLast() {
-		return remove(size-1);
+		return remove(size - 1);
 	}
 
 	@Override
@@ -301,7 +342,7 @@ public class MyList implements List<Integer>, Deque<Integer> {
 
 	@Override
 	public Integer pollLast() {
-		return remove(size -1);
+		return remove(size - 1);
 	}
 
 	@Override
@@ -311,7 +352,7 @@ public class MyList implements List<Integer>, Deque<Integer> {
 
 	@Override
 	public Integer getLast() {
-		return get(size -1);
+		return get(size - 1);
 	}
 
 	@Override

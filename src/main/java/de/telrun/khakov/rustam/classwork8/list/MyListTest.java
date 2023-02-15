@@ -1,5 +1,7 @@
 package de.telrun.khakov.rustam.classwork8.list;
 
+import java.util.Deque;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -7,7 +9,7 @@ import java.util.List;
  */
 public class MyListTest {
 	public static void main(String[] args) {
-		List<Integer> values = new MyList();
+		MyList values = new MyList();
 		values.add(8);
 		values.add(5);
 		System.out.println(values.size());
@@ -22,6 +24,13 @@ public class MyListTest {
 		System.out.println(values.get(2));
 		values.remove(0);
 		System.out.println(values.get(1));
+
+		values.descendingIterator();
+
+		Iterator<Integer> iterator = values.iterator();
+		for(Integer v: values) {
+
+		}
 
 	}
 }
