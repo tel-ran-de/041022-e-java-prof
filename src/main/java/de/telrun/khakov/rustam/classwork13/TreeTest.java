@@ -16,7 +16,9 @@ public class TreeTest {
 		tree.add(19);
 		tree.add(15);
 //		tree.printBfs();
-		tree.print();
+		//tree.print();
+		//tree.printDFS();
+		tree.printDfsWithRec();
 
 	}
 }

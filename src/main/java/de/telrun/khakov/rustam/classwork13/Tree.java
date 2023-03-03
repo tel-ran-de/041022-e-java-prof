@@ -3,6 +3,7 @@ package de.telrun.khakov.rustam.classwork13;
 import java.util.ArrayDeque;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  * @author Rustam Khakov
@@ -13,6 +14,35 @@ public class Tree {
 
 	public Tree() {
 	}
+
+	public void printDfsWithRec() {
+		printDfsWithRec(root);
+	}
+
+	public void printDfsWithRec(Node currentNode) {
+		if (currentNode == null) {
+			return;
+		}
+		printDfsWithRec(currentNode.right);
+		printDfsWithRec(currentNode.left);
+		System.out.println(currentNode.key);
+	}
+
+	public void printDFS() {  // Root Right Left   Root Left Right   Left Root Right
+		Stack<Node> stack = new Stack<>();
+		stack.add(root);
+		while (!stack.isEmpty()) {
+			Node currentNode = stack.pop();
+			if (currentNode.right != null) {
+				stack.add(currentNode.right);
+			}
+			if (currentNode.left != null) {
+				stack.add(currentNode.left);
+			}
+			System.out.println(currentNode.key);
+		}
+	}
+
 
 	public void printBfs() {
 		Queue<Node> queue = new ArrayDeque<>();
