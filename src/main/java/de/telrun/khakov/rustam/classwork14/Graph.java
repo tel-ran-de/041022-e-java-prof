@@ -100,15 +100,15 @@ public class Graph {
 		while (!elements.isEmpty()) {
 			Integer currentNodeIndex = elements.pop();
 			if (!alreadyProcessed.contains(currentNodeIndex)) {
-				System.out.println(currentNodeIndex);
-				alreadyProcessed.add(currentNodeIndex);
-				List<Edge> edges = nodes.get(currentNodeIndex);
-				if (edges == null) {
-					continue;
-				}
-				for (Edge edge : edges) {
-					elements.add(edge.to);
-				}
+			System.out.println(currentNodeIndex);
+			alreadyProcessed.add(currentNodeIndex);
+			List<Edge> edges = nodes.get(currentNodeIndex);
+			if (edges == null) {
+				continue;
+			}
+			for (Edge edge : edges) {
+				elements.add(edge.to);
+			}
 			}
 		}
 	}
@@ -137,7 +137,7 @@ public class Graph {
 		if (edges != null) {
 			for (Edge edge : edges) {
 				if (colors[edge.to] == 0) {
-					isCycle = findCycle(edge.to, colors);
+					isCycle = isCycle || findCycle(edge.to, colors);
 				} else if (colors[edge.to] == 1) {
 					isCycle = true;
 					System.out.println("цикл найден!");
