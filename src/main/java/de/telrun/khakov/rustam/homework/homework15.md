@@ -21,7 +21,7 @@
 Например:
 ```
 String str = "Мама мыла раму";
-Iterator<Character> wordSymbolsIterator = new wordSymbolsIterator(str);
+Iterator<Character> wordSymbolsIterator = new WordSymbolsIterator(str);
 while(wordSymbolsIterator.hasNext()) {
     System.out.println(wordSymbolsIterator.next());
 }
